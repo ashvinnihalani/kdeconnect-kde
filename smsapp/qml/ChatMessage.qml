@@ -18,48 +18,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-<<<<<<< HEAD
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.12
 import org.kde.kirigami 2.13 as Kirigami
-=======
-import QtQuick 2.6
-import QtGraphicalEffects 1.0
-import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.2 as Controls
-import org.kde.kirigami 2.0 as Kirigami
-//import im.kaidan.kaidan 1.0
-
-RowLayout {
-  id: root
-
-  property string msgId
-  property string sender
-  property bool sentByMe: true
-  property string messageBody
-  property date dateTime
-  property bool isRead: false
-  property int mediaType
-  property string mediaGetUrl
-  property string mediaLocation
-  property bool edited
-//  property bool isLoading: kaidan.transferCache.hasUpload(msgId)
-  property string name
-  property bool multiTarget: false
-//  property TransferJob upload: {
-//    if (mediaType !== Enums.MessageType.MessageText && isLoading) {
-//      return kaidan.transferCache.jobByMessageId(model.id)
-//    }
-//
-//    return null
-//  }
-  property bool isSpoiler
-  property string spoilerHint
-  property bool isShowingSpoiler: false
-  property string avatarUrl: ""
->>>>>>> 609ddf8d... Removed Clutter Single Party Conversation
 
 Item {
     id: root
@@ -70,20 +33,9 @@ Item {
     property bool sentByMe
     property date dateTime
     property string name
+    property bool multiTarget
 
-<<<<<<< HEAD
     signal messageCopyRequested(string message)
-=======
-  Avatar {
-    id: avatar
-    visible: !sentByMe && multiTarget
-    avatarUrl: root.avatarUrl
-    Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-    name: root.name
-    Layout.preferredHeight: Kirigami.Units.gridUnit * 2.2
-    Layout.preferredWidth: Kirigami.Units.gridUnit * 2.2
-  }
->>>>>>> 609ddf8d... Removed Clutter Single Party Conversation
 
     Kirigami.Avatar {
         id: avatar
@@ -126,12 +78,21 @@ Item {
                 height: childrenRect.height
 
                 property int contentWidth: Math.max(messageLabel.implicitWidth, dateLabel.implicitWidth)
+                Label {
+                    id: authorLabel
+                    width: parent.width
+                    text: root.name
+                    leftPadding: Kirigami.Units.largeSpacing
+                    topPadding: Kirigami.Units.smallSpacing
+                    visible: multiTarget
+                    color: Kirigami.Theme.disabledTextColor
+                    horizontalAlignment: messageLabel.horizontalAlignment
+                }
 
                 Label {
                     id: messageLabel
                     leftPadding: Kirigami.Units.largeSpacing
                     rightPadding: Kirigami.Units.largeSpacing
-                    topPadding: Kirigami.Units.largeSpacing
                     width: parent.width
                     horizontalAlignment: root.sentByMe ? Text.AlignRight : Text.AlignLeft
                     wrapMode: Text.Wrap
