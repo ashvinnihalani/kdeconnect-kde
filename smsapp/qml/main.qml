@@ -50,7 +50,9 @@ Kirigami.ApplicationWindow
                 text: i18nd("kdeconnect-sms", "About...")
                 icon.name: "help-about"
                 onTriggered: {
-                    applicationWindow().pageStack.push(aboutPageComponent, { aboutData: aboutData });
+                    applicationWindow().pageStack.find(function(page) {
+                        page.id == aboutPageComponent
+                    }) ? : pageStack.push(aboutPageComponent, { aboutData: aboutData }));
                 }
             }
         ]
