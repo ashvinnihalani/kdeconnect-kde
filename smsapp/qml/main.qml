@@ -20,10 +20,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
+import QtQuick 2.2
 import org.kde.kirigami 2.6 as Kirigami
 import org.kde.kdeconnect 1.0
-
 Kirigami.ApplicationWindow
 {
     id: root
@@ -44,15 +43,13 @@ Kirigami.ApplicationWindow
     globalDrawer: Kirigami.GlobalDrawer {
 
         isMenu: true
-
         actions: [
             Kirigami.Action {
                 text: i18nd("kdeconnect-sms", "About...")
                 icon.name: "help-about"
                 onTriggered: {
-                    applicationWindow().pageStack.find(function(page) {
-                        page.id == aboutPageComponent
-                    }) ? : pageStack.push(aboutPageComponent, { aboutData: aboutData }));
+                    pageStack.get(pageStack.depth-1).conversationId ? pageStack.pop() : "";
+                    pageStack.get(pageStack.depth-1).aboutData ? "" : pageStack.push(aboutPageComponent, { aboutData: aboutData });
                 }
             }
         ]
